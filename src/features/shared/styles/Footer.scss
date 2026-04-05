@@ -1,0 +1,38 @@
+// ============================================================
+//  Footer.scss
+// ============================================================
+
+$bg:      #0a0a0a;
+$accent:  #c8f135;
+$muted:   #444444;
+$border:  rgba(255, 255, 255, 0.07);
+$font:    'Syne', 'DM Sans', sans-serif;
+
+.footer {
+  border-top: 1px solid rgb(185, 182, 182);
+  background-color: $bg;
+  font-family: $font;
+  padding: 36px 20px 32px;
+}
+
+.footer-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-brand {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $accent;
+}
+
+.footer-copy {
+  font-size: 0.78rem;
+  color: $muted;
+  text-align: center;
+}

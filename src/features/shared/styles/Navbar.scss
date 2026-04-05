@@ -1,0 +1,155 @@
+// ============================================================
+//  Navbar.scss
+// ============================================================
+
+$bg:        #0d0d0d;
+$accent:    #c8f135;
+$text:      #ffffff;
+$muted:     #666666;
+$border:    rgba(255, 255, 255, 0.08);
+$font:      'Syne', 'DM Sans', sans-serif;
+$ease:      0.2s ease;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: $bg;
+  border-bottom: 1px solid $border;
+  transition: border-color $ease, box-shadow $ease;
+  font-family: $font;
+
+  &.navbar-scrolled {
+    border-bottom-color: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.navbar-inner {
+  max-width: 85%;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  justify-content: space-between;
+}
+
+// Logo
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar-logo-icon {
+  width: 30px;
+  height: 30px;
+  background: $accent;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0d0d0d;
+}
+
+.navbar-logo-text {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $text;
+}
+
+.navbar-logo-accent { color: $accent; }
+
+// Nav Links
+.navbar-links {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-link {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: $muted;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: color $ease;
+
+
+  &:hover { color: $text; }
+
+  &.navbar-link-active {
+    color: $text;
+    font-weight: 700;
+  }
+}
+
+// Right Actions
+.navbar-actions {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: 5px 12px 5px 6px;
+}
+
+.navbar-user-avatar {
+  width: 26px;
+  height: 26px;
+  background: $accent;
+  border-radius: 6px;
+  color: #0d0d0d;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-user-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: $text;
+}
+
+.navbar-btn-icon {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid $border;
+  border-radius: 8px;
+  color: $muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color $ease, border-color $ease, background $ease;
+
+  &:hover {
+    color: $text;
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
