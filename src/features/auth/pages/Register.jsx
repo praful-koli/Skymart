@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "../style/Register.scss";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useAuth } from "../hook/useAuth.js";
 // import { useForm } from "react-hook-form";
 
 const BoltIcon = () => (
@@ -91,34 +94,35 @@ const EyeOffIcon = () => (
 );
 
 export default function Register() {
-  
-  // const {
-  //   register,
-  //   reset,
-  //   // handleSubmit,
-  //   formState: { errors },
-  // } = useForm({
-  //   mode: "onChange",
-  // });
-
-  // const onSubmit = (data) => {};
-
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirm: "",
+  const navigate = useNavigate();
+  const { registers, setRegisters } = useAuth();
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
   });
+  console.log("register page redender...");
+  const onSubmit = (data) => {
+
+
+    const exists = registers.some((u) => u.email === data.email);
+    if (exists) {
+      toast.error("User already registered");
+      return;
+    }
+    const newUsersReg = [...registers, data];
+    setRegisters(newUsersReg);
+    localStorage.setItem("reg users", JSON.stringify(newUsersReg));
+    toast.success("Registered successfully");
+    reset();
+    navigate("/home");
+  };
+
   const [showPass, setShowPass] = useState(false);
   const [focused, setFocused] = useState(null);
-
-  const set = (field) => (e) =>
-    setForm((p) => ({ ...p, [field]: e.target.value }));
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Account created!");
-  };
 
   return (
     <div className="register-page">
@@ -137,7 +141,7 @@ export default function Register() {
         <h2 className="register-card__title">Create account</h2>
         <p className="register-card__sub">Join SkyMart and start shopping</p>
 
-        <form className="register-form" onSubmit={handleSubmit}>
+        <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
           {/* Full Name */}
           <div
             className={`field ${focused === "name" ? "field--focused" : ""}`}
@@ -146,15 +150,17 @@ export default function Register() {
               <UserIcon />
             </span>
             <input
+              {...register("name", { required: "name Required" })}
               type="text"
               className="field__input"
               placeholder="Full name"
-              onChange={set("name")}
               onFocus={() => setFocused("name")}
               onBlur={() => setFocused(null)}
             />
           </div>
-
+          {errors.name && (
+            <p className="text-xs text-red-400">{errors.name.message}</p>
+          )}
           {/* Email */}
           <div
             className={`field ${focused === "email" ? "field--focused" : ""}`}
@@ -163,16 +169,17 @@ export default function Register() {
               <MailIcon />
             </span>
             <input
+              {...register("email", { required: "Email Required" })}
               type="email"
               className="field__input"
               placeholder="Email address"
-              value={form.email}
-              onChange={set("email")}
               onFocus={() => setFocused("email")}
               onBlur={() => setFocused(null)}
             />
           </div>
-
+          {errors.email && (
+            <p className="text-xs text-red-400">{errors.email.message}</p>
+          )}
           {/* Password */}
           <div
             className={`field ${focused === "password" ? "field--focused" : ""}`}
@@ -181,14 +188,25 @@ export default function Register() {
               <LockIcon />
             </span>
             <input
+              {...register("password", {
+                required: "Password required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                },
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                  message:
+                    "Password must contain at least one letter and one number",
+                },
+              })}
               type={showPass ? "text" : "password"}
               className="field__input"
               placeholder="Password (min 6 chars)"
-              value={form.password}
-              onChange={set("password")}
               onFocus={() => setFocused("password")}
               onBlur={() => setFocused(null)}
             />
+
             <button
               type="button"
               className="field__eye"
@@ -198,6 +216,9 @@ export default function Register() {
               {showPass ? <EyeOffIcon /> : <EyeIcon />}
             </button>
           </div>
+          {errors.password && (
+            <p className="text-xs text-red-400">{errors.password.message}</p>
+          )}
 
           {/* Confirm Password */}
           <div
@@ -207,15 +228,28 @@ export default function Register() {
               <LockIcon />
             </span>
             <input
+              {...register("confirm", {
+                required: "Password required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                },
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                  message:
+                    "Password must contain at least one letter and one number",
+                },
+              })}
               type="password"
               className="field__input"
               placeholder="Confirm password"
-              value={form.confirm}
-              onChange={set("confirm")}
               onFocus={() => setFocused("confirm")}
               onBlur={() => setFocused(null)}
             />
           </div>
+          {errors.confirm && (
+            <p className="text-xs text-red-400">{errors.confirm.message}</p>
+          )}
 
           <button type="submit" className="submit-btn">
             Create Account <span className="submit-btn__arrow">→</span>
@@ -226,9 +260,9 @@ export default function Register() {
           Already have an account?{" "}
           <Link to={"/"}>
             {" "}
-            <a href="#" className="register-card__link">
+            <p href="#" className="register-card__link">
               Sign in
-            </a>
+            </p>
           </Link>
         </p>
       </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import {useNavigate} from 'react-router'
 import "../styles/Navbar.scss";
 
 const BoltIcon = () => (
@@ -24,7 +25,7 @@ const LogoutIcon = () => (
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-
+  const navigate = useNavigate()
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
@@ -53,10 +54,10 @@ export default function Navbar() {
             <div className="navbar-user-avatar">P</div>
             <span className="navbar-user-name">Praful Koli</span>
           </div>
-          <button className="navbar-btn-icon" aria-label="Cart">
+          <button className="navbar-btn-icon cart" aria-label="Cart">
             <CartIcon />
           </button>
-          <button className="navbar-btn-icon" aria-label="Logout">
+          <button onClick={()=> navigate('/')} className="navbar-btn-icon logout" aria-label="Logout">
             <LogoutIcon />
           </button>
         </div>

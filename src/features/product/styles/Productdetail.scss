@@ -1,0 +1,314 @@
+// ============================================================
+//  ProductDetail.scss
+// ============================================================
+
+$bg:          #0d0d0d;
+$bg-image:    #ffffff;
+$bg-badge:    #1a1a1a;
+$bg-card:     #161616;
+$accent:      #c8f135;
+$text:        #ffffff;
+$text-muted:  #777777;
+$text-dim:    #999999;
+$border:      rgba(255, 255, 255, 0.09);
+$border-med:  rgba(255, 255, 255, 0.13);
+$font:        'Syne', 'DM Sans', sans-serif;
+$ease:        0.18s ease;
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.pd-page {
+  min-height: 100vh;
+  background: $bg;
+  font-family: $font;
+  color: $text;
+  padding-bottom: 80px;
+}
+
+.pd-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+// Breadcrumb
+.pd-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: $text-muted;
+}
+
+.pd-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: $text-muted;
+  font-family: $font;
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color $ease;
+
+  &:hover { color: $text; }
+}
+
+.pd-bread-sep { color: rgba(255,255,255,0.2); }
+
+.pd-bread-item { color: $text-muted; }
+
+.pd-bread-current { color: $text-dim; }
+
+// Main layout
+.pd-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+  align-items: start;
+}
+
+// Image panel
+.pd-image-wrap {
+  background: $bg-image;
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+// Info panel
+.pd-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.pd-category-badge {
+  display: inline-flex;
+  background: $accent;
+  color: #0d0d0d;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.pd-name {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: $text;
+}
+
+// Rating
+.pd-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pd-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.pd-star-on  { color: #e5c44a; display: flex; }
+.pd-star-off { color: #333333; display: flex; }
+
+.pd-rating-num {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $text;
+}
+
+.pd-rating-count {
+  font-size: 0.82rem;
+  color: $text-muted;
+}
+
+.pd-divider {
+  height: 1px;
+  background: $border;
+}
+
+// Price
+.pd-price {
+  font-size: 2rem;
+  font-weight: 900;
+  color: $accent;
+  letter-spacing: -0.04em;
+}
+
+// Description
+.pd-desc {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: $text-muted;
+}
+
+// CTA row
+.pd-cta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.pd-add-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background: $accent;
+  color: #0d0d0d;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 24px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  font-family: $font;
+  cursor: pointer;
+  transition: background $ease, transform $ease;
+
+  &:hover {
+    background: darken(#c8f135, 8%);
+    transform: translateY(-1px);
+  }
+}
+
+.pd-wish-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid $border-med;
+  background: transparent;
+  color: $text-muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color $ease, border-color $ease, background $ease;
+
+  &:hover {
+    color: #e05555;
+    border-color: rgba(224, 85, 85, 0.4);
+    background: rgba(224, 85, 85, 0.08);
+  }
+
+  &.pd-wish-btn-active {
+    color: #e05555;
+    background: rgba(224, 85, 85, 0.1);
+    border-color: rgba(224, 85, 85, 0.4);
+
+    svg { fill: #e05555; }
+  }
+}
+
+// Trust badges
+.pd-badges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.pd-badge-card {
+  border: 1px solid $border-med;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: $text-muted;
+
+  svg { flex-shrink: 0; color: $accent; }
+}
+
+.pd-badge-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: $text;
+}
+
+.pd-badge-sub {
+  font-size: 0.68rem;
+  color: $text-muted;
+  margin-top: 2px;
+}
+
+// Next button
+.pd-next-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  background: $accent;
+  color: #0d0d0d;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  font-family: $font;
+  cursor: pointer;
+  transition: background $ease, transform $ease;
+
+  &:hover {
+    background: darken(#c8f135, 8%);
+    transform: translateY(-1px);
+  }
+
+  svg { transition: transform $ease; }
+  &:hover svg { transform: translateX(3px); }
+}
+
+// Related
+.pd-related {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pd-related-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: $text;
+}
+
+.pd-related-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+// Responsive
+@media (max-width: 900px) {
+  .pd-main { grid-template-columns: 1fr; gap: 28px; }
+  .pd-related-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .pd-name { font-size: 1.6rem; }
+  .pd-badges { grid-template-columns: 1fr; }
+  .pd-related-grid { grid-template-columns: repeat(2, 1fr); }
+}
