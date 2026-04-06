@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useCart } from "../hook/useCart";
 import ProductCard from "../components/ProductCard";
 import "../styles/Productdetail.scss";
