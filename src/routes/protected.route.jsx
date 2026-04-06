@@ -13,4 +13,13 @@ const ProtectedHome = () => {
   return <Outlet />;
 };
 
-export default ProtectedHome;
+const ProtectedAuth = () => {
+  const { loggedInUser } = useAuth();
+   if (loggedInUser) {
+   
+    return  <Navigate to={'/home'}/>
+  }
+  return <Outlet />;
+};
+
+export { ProtectedHome , ProtectedAuth};

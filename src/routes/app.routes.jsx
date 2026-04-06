@@ -7,26 +7,32 @@ import Home from "../features/product/pages/Home";
 import Products from "../features/product/pages/Products";
 import ProductDetail from "../features/product/pages/Productdetail";
 import About from "../features/product/pages/About";
-import ProtectedHome from "./protected.route.jsx"; 
+import { ProtectedHome, ProtectedAuth } from "./protected.route.jsx";
 
 export const AppRouter = createBrowserRouter([
   {
     path: "/",
-    element: <AuthLayOut />,
+    element: <ProtectedAuth />,
     children: [
       {
         path: "",
-        element: <Login />,
-      },
-      {
-        path: "register",
-        element: <Register />,
+        element: <AuthLayOut />,
+        children: [
+          {
+            path: "",
+            element: <Login />,
+          },
+          {
+            path: "register",
+            element: <Register />,
+          },
+        ],
       },
     ],
   },
   {
     path: "/home",
-    element: <ProtectedHome />, 
+    element: <ProtectedHome />,
     children: [
       {
         path: "",

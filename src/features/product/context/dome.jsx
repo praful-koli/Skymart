@@ -2,20 +2,13 @@ import { useState, useEffect } from "react";
 import { CartContext } from "./cartContext.js";
 
 export function CartProvider({ children }) {
-  // Initialize cart safely
   const [items, setItems] = useState(() => {
-    try {
-      const stored = localStorage.getItem("cart");
-      return stored ? JSON.parse(stored) : [];
-    } catch (err) {
-      console.error("Failed to parse cart from localStorage", err);
-      return [];
-    }
+    const stored = localStorage.getItem("cart");
+    return stored ? JSON.parse(stored) : [];
   });
-
   const [isOpen, setIsOpen] = useState(false);
 
-  // Sync cart state to localStorage whenever items change
+  // Keep localStorage in sync whenever items change
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(items));
   }, [items]);
@@ -40,13 +33,12 @@ export function CartProvider({ children }) {
     setItems((prev) => prev.filter((i) => i.id !== id));
   };
 
-  const updateQty = (id, delta) => {
+  const updateQty = (id, delta) =>
     setItems((prev) =>
       prev
         .map((i) => (i.id === id ? { ...i, qty: i.qty + delta } : i))
         .filter((i) => i.qty > 0)
     );
-  };
 
   const clearCart = () => setItems([]);
 
