@@ -1,6 +1,6 @@
 import { useCart } from "../hook/useCart";
 import "../styles/ProductCard.scss";
-
+import {useNavigate} from 'react-router'
 const CartIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
@@ -41,9 +41,10 @@ export default function ProductCard({ product }) {
         count,} = useCart()
        
         // console.log('prduct ' , product)
+      const navigate  = useNavigate()
   return (
     <div className="pc-card">
-      <div className="pc-image-wrap">
+      <div className="pc-image-wrap" onClick={()=> navigate(`/home/productdetail/${product.id}`)}>
         <span className="pc-badge">{product.category}</span>
         <img src={product.image} alt={product.name} className="pc-image" />
       </div>
