@@ -7,6 +7,7 @@ import Home from "../features/product/pages/Home";
 import Products from "../features/product/pages/Products";
 import ProductDetail from "../features/product/pages/Productdetail";
 import About from "../features/product/pages/About";
+import ProtectedHome from "./protected.route.jsx"; 
 
 export const AppRouter = createBrowserRouter([
   {
@@ -23,26 +24,31 @@ export const AppRouter = createBrowserRouter([
       },
     ],
   },
-
   {
     path: "/home",
-    element: <MainLayOut />,
+    element: <ProtectedHome />, 
     children: [
       {
         path: "",
-        element: <Home />,
-      },
-      {
-        path: "products",
-        element: <Products />,
-      },
-      {
-        path:"productdetail/:id",
-        element : <ProductDetail/>
-      },
-      {
-        path:"about",
-        element : <About/>
+        element: <MainLayOut />,
+        children: [
+          {
+            path: "",
+            element: <Home />,
+          },
+          {
+            path: "products",
+            element: <Products />,
+          },
+          {
+            path: "productdetail/:id",
+            element: <ProductDetail />,
+          },
+          {
+            path: "about",
+            element: <About />,
+          },
+        ],
       },
     ],
   },

@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router";
 import "../styles/Navbar.scss";
 import { NavLink } from "react-router";
 import {useCart} from '../../product/hook/useCart.js'
+import { useAuth } from "../../auth/hook/useAuth.js";
+import { toast } from "react-toastify";
 const BoltIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
     <path d="M13 2L4.09 12.97H11L10 22L20.91 11.03H14L13 2Z" />
@@ -47,6 +49,12 @@ export default function Navbar() {
   const {setIsOpen,items} = useCart()
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+ const {LogOut} = useAuth()
+  const LogOutHandler = () => {
+    LogOut()
+    navigate('/')
+    toast.success('LogOut Successfull')
+  }
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
@@ -116,7 +124,7 @@ export default function Navbar() {
             <p className={items.length == 0 ? " " : "w-4 h-4  rounded-3xl bg-[#e8e838] text-[11px] text-black flex items-center justify-center absolute top-[-4px] right-[-4px]"}>{items.length  == 0? '' :items.length }</p>
           </button>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => LogOutHandler()}
             className="navbar-btn-icon logout"
             aria-label="Logout"
           >
