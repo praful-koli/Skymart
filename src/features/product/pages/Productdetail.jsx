@@ -308,7 +308,7 @@ const ALL_PRODUCTS = [
 ];
 
 export default function ProductDetail({onBack, onNext }) {
-   const { id } = useParams();
+ const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [wished, setWished] = useState(false);
