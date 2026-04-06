@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCart } from "../hook/useCart";
 import ProductCard from "../components/ProductCard";
 import "../styles/Productdetail.scss";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, Link,useParams } from "react-router";
 // ── Icons ──────────────────────────────────────────────────
 const StarIcon = ({ filled }) => (
   <svg
