@@ -307,16 +307,33 @@ const ALL_PRODUCTS = [
   },
 ];
 
-export default function ProductDetail({ productId = 1, onBack, onNext }) {
+export default function ProductDetail({ onBack, onNext }) {
+const { id } = useParams();
+  const navigate = useNavigate();
   const { addToCart } = useCart();
   const [wished, setWished] = useState(false);
-  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+  const [related, setRelated] = useState([]);
 
-  const product =
-    ALL_PRODUCTS.find((p) => p.id === productId) || ALL_PRODUCTS[0];
-  const related = ALL_PRODUCTS.filter(
-    (p) => p.category === product.category && p.id !== product.id,
-  ).slice(0, 5);
+  // Update product whenever id changes
+  useEffect(() => {
+    const found =
+      ALL_PRODUCTS.find((p) => String(p.id) === String(id)) || null;
+    setProduct(found);
+
+    if (found) {
+      const rel = ALL_PRODUCTS.filter(
+        (p) => p.category === found.category && String(p.id) !== String(found.id)
+      ).slice(0, 5);
+      setRelated(rel);
+    } else {
+      setRelated([]);
+    }
+  }, [id]);
+
+  if (!product) {
+    return <p>Product not found.</p>;
+  }
 
 //   const handleAdd = () => addToCart(product);
 
@@ -433,9 +450,9 @@ export default function ProductDetail({ productId = 1, onBack, onNext }) {
             <h2 className="pd-related-title">Related Products</h2>
              <div className="pd-related-grid">
               {related.map((p) => (
-               <Link to={`/home/productdetail/${p.id}`}>
+               
                   <ProductCard key={p.id} product={p} />
-                </Link>
+            
               ))}
             </div>
           </section>
