@@ -1,9 +1,10 @@
 import React from "react";
 import { Outlet } from "react-router";
-import Navbar from "../features/shared/components/NavBar";
-import Footer from "../features/shared/components/Footer";
+import Navbar from "../features/shared/components/Navbar.jsx";
+
+import Footer from "../features/shared/components/Footer.jsx";
 import { CartProvider } from "../features/product/context/CartContext.jsx";
-import CartSlider from "../features/shared/components/Cartslider";
+import CartSlider from "../features/shared/components/Cartslider.jsx";
 const MainLayOut = () => {
   return (
     <CartProvider>

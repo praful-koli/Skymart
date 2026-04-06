@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate,NavLink } from "react-router-dom";
 import "../styles/Navbar.scss";
-import { NavLink } from "react-router";
+
 import {useCart} from '../../product/hook/useCart.js'
 import { useAuth } from "../../auth/hook/useAuth.js";
 import { toast } from "react-toastify";
