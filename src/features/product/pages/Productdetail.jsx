@@ -1,8 +1,8 @@
 import { useState } from "react";
-// import { useCart } from "./CartContext";
+import { useCart } from "../hook/useCart";
 import ProductCard from "../components/ProductCard";
 import "../styles/Productdetail.scss";
-
+import { useNavigate } from "react-router";
 // ── Icons ──────────────────────────────────────────────────
 const StarIcon = ({ filled }) => (
   <svg
@@ -308,8 +308,9 @@ const ALL_PRODUCTS = [
 ];
 
 export default function ProductDetail({ productId = 1, onBack, onNext }) {
-//   const { addToCart } = useCart();
+  const { addToCart } = useCart();
   const [wished, setWished] = useState(false);
+  const navigate = useNavigate();
 
   const product =
     ALL_PRODUCTS.find((p) => p.id === productId) || ALL_PRODUCTS[0];
@@ -324,7 +325,7 @@ export default function ProductDetail({ productId = 1, onBack, onNext }) {
       <div className="pd-container">
         {/* Breadcrumb */}
         <nav className="pd-breadcrumb">
-          <button className="pd-back-btn" onClick={onBack}>
+          <button className="pd-back-btn" onClick={()=>navigate('/home/products')}>
             <BackIcon /> Products
           </button>
           <span className="pd-bread-sep">/</span>
@@ -382,7 +383,7 @@ export default function ProductDetail({ productId = 1, onBack, onNext }) {
 
             {/* CTA */}
             <div className="pd-cta">
-              <button className="pd-add-btn" >
+              <button onClick={() => addToCart(product)} className="pd-add-btn" >
                 <CartIcon /> Add to Cart
               </button>
               <button
@@ -435,7 +436,7 @@ export default function ProductDetail({ productId = 1, onBack, onNext }) {
                 <ProductCard
                   key={p.id}
                   product={p}
-                //   onAdd={() => addToCart(p)}
+               
                 />
               ))}
             </div>

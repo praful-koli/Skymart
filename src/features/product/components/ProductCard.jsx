@@ -1,3 +1,4 @@
+import { useCart } from "../hook/useCart";
 import "../styles/ProductCard.scss";
 
 const CartIcon = () => (
@@ -28,7 +29,18 @@ function StarRating({ rating, count }) {
   );
 }
 
-export default function ProductCard({ product, onAdd }) {
+export default function ProductCard({ product }) {
+     const {addToCart, items,
+        isOpen,
+        openCart,
+        closeCart,
+        removeItem,
+        updateQty,
+        clearCart,
+        total,
+        count,} = useCart()
+       
+        // console.log('prduct ' , product)
   return (
     <div className="pc-card">
       <div className="pc-image-wrap">
@@ -42,7 +54,7 @@ export default function ProductCard({ product, onAdd }) {
         <div className="pc-divider" />
         <div className="pc-footer">
           <span className="pc-price">${product.price.toFixed(2)}</span>
-          <button className="pc-add-btn" onClick={() => onAdd && onAdd(product)}>
+          <button className="pc-add-btn" onClick={() => addToCart(product) }>
             <CartIcon /> Add
           </button>
         </div>

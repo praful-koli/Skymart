@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import {useNavigate} from 'react-router'
+import { Link, useNavigate } from "react-router";
 import "../styles/Navbar.scss";
-
+import { NavLink } from "react-router";
+import {useCart} from '../../product/hook/useCart.js'
 const BoltIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
     <path d="M13 2L4.09 12.97H11L10 22L20.91 11.03H14L13 2Z" />
@@ -9,14 +10,33 @@ const BoltIcon = () => (
 );
 
 const CartIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="9" cy="21" r="1" />
+    <circle cx="20" cy="21" r="1" />
     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
   </svg>
 );
 
 const LogoutIcon = () => (
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="17"
+    height="17"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
     <polyline points="16 17 21 12 16 7" />
     <line x1="21" y1="12" x2="9" y2="12" />
@@ -24,8 +44,9 @@ const LogoutIcon = () => (
 );
 
 export default function Navbar() {
+  const {setIsOpen,items} = useCart()
   const [scrolled, setScrolled] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
@@ -36,16 +57,52 @@ export default function Navbar() {
     <nav className={`navbar${scrolled ? " navbar-scrolled" : ""}`}>
       <div className="navbar-inner">
         {/* Logo */}
+         <Link to={'/home'}>
         <div className="navbar-logo">
-          <div className="navbar-logo-icon"><BoltIcon /></div>
-          <span className="navbar-logo-text">Sky<span className="navbar-logo-accent">Mart</span></span>
+         
+            <div className="navbar-logo-icon">
+              <BoltIcon />
+            </div>
+         
+          <span className="navbar-logo-text">
+            Sky<span className="navbar-logo-accent">Mart</span>
+          </span>
         </div>
+         </Link>
 
         {/* Nav Links */}
         <ul className="navbar-links">
-          <li><a href="#" className="navbar-link navbar-link-active">Home</a></li>
-          <li><a href="#" className="navbar-link">Shop</a></li>
-          <li><a href="#" className="navbar-link">About</a></li>
+          <li>
+            <NavLink
+              to="/home"
+              end
+              className={({ isActive }) =>
+                `navbar-link ${isActive ? "navbar-link-active" : ""}`
+              }
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/home/products"
+              className={({ isActive }) =>
+                `navbar-link ${isActive ? "navbar-link-active" : ""}`
+              }
+            >
+              Shop
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/home/about"
+              className={({ isActive }) =>
+                `navbar-link ${isActive ? "navbar-link-active" : ""}`
+              }
+            >
+              About
+            </NavLink>
+          </li>
         </ul>
 
         {/* Right Actions */}
@@ -54,10 +111,15 @@ export default function Navbar() {
             <div className="navbar-user-avatar">P</div>
             <span className="navbar-user-name">Praful Koli</span>
           </div>
-          <button className="navbar-btn-icon cart" aria-label="Cart">
+          <button onClick={() => setIsOpen(true)} className="navbar-btn-icon cart relative" aria-label="Cart">
             <CartIcon />
+            <p className={items.length == 0 ? " " : "w-4 h-4  rounded-3xl bg-[#e8e838] text-[11px] text-black flex items-center justify-center absolute top-[-4px] right-[-4px]"}>{items.length  == 0? '' :items.length }</p>
           </button>
-          <button onClick={()=> navigate('/')} className="navbar-btn-icon logout" aria-label="Logout">
+          <button
+            onClick={() => navigate("/")}
+            className="navbar-btn-icon logout"
+            aria-label="Logout"
+          >
             <LogoutIcon />
           </button>
         </div>

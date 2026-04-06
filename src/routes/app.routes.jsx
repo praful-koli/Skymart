@@ -6,6 +6,7 @@ import MainLayOut from "../LayOut/MainLayOut";
 import Home from "../features/product/pages/Home";
 import Products from "../features/product/pages/Products";
 import ProductDetail from "../features/product/pages/Productdetail";
+import About from "../features/product/pages/About";
 
 export const AppRouter = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const AppRouter = createBrowserRouter([
       {
         path:"productdetail/:id",
         element : <ProductDetail/>
+      },
+      {
+        path:"about",
+        element : <About/>
       },
     ],
   },

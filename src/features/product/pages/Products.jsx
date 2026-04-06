@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import "../styles/Products.scss";
-
+import { Link, useSearchParams } from "react-router";
+import {useCart} from '../hook/useCart'
 // ── Icons ─────────────────────────────────────────────────────
 const SearchIcon = () => (
   <svg
@@ -30,6 +31,21 @@ const ChevronIcon = () => (
     strokeLinejoin="round"
   >
     <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
+const XIcon = () => (
+  <svg
+    width="11"
+    height="11"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
 
@@ -594,14 +610,42 @@ function CustomSelect({ value, onChange, options, accentOnOpen = false }) {
 
 // ── Products Page ─────────────────────────────────────────────
 export default function Products() {
+  const [searchParams] = useSearchParams();
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [sort, setSort] = useState("Featured");
 
+  // ── Read ?category= from URL on first mount ────────────────
+  useEffect(() => {
+    const urlCategory = searchParams.get("category");
+    if (urlCategory && CATEGORIES.includes(urlCategory)) {
+      setCategory(urlCategory);
+    }
+  }, []); // run once on mount
+
+  const hasSearch = search.trim() !== "";
+  const hasCategory = category !== "All Categories";
+  const hasSort = sort !== "Featured";
+  const hasAnyFilter = hasSearch || hasCategory || hasSort;
+
+  const clearAll = () => {
+    setSearch("");
+    setCategory("All Categories");
+    setSort("Featured");
+  };
+
+  // Count suffix label
+  const countSuffix = useMemo(() => {
+    const parts = [];
+    if (hasCategory) parts.push(`in ${category}`);
+    if (hasSearch) parts.push(`matching "${search.trim()}"`);
+    return parts.join(" ");
+  }, [hasCategory, hasSearch, category, search]);
+
   const filtered = useMemo(() => {
     let list = [...PRODUCTS];
-    // search
-    if (search.trim()) {
+    if (hasSearch) {
       const q = search.toLowerCase();
       list = list.filter(
         (p) =>
@@ -609,18 +653,20 @@ export default function Products() {
           p.category.toLowerCase().includes(q),
       );
     }
-    // category
-    if (category !== "All Categories") {
+    if (hasCategory) {
       list = list.filter((p) => p.category === category);
     }
-    // sort
     if (sort === "Price: Low → High") list.sort((a, b) => a.price - b.price);
     if (sort === "Price: High → Low") list.sort((a, b) => b.price - a.price);
     if (sort === "Top Rated")
       list.sort((a, b) => b.rating - a.rating || b.reviewCount - a.reviewCount);
     if (sort === "Lowest Rated") list.sort((a, b) => a.rating - b.rating);
     return list;
-  }, [search, category, sort]);
+  }, [search, category, sort, hasSearch, hasCategory]);
+ 
+
+
+  // add to cart 
 
   return (
     <div className="products-page">
@@ -628,35 +674,92 @@ export default function Products() {
         {/* Header */}
         <div className="products-header">
           <h1 className="products-title">All Products</h1>
-          <p className="products-count">{filtered.length} products found</p>
+          <p className="products-count">
+            {filtered.length} products found{" "}
+            {countSuffix && (
+              <span className="products-count-hl">{countSuffix}</span>
+            )}
+          </p>
         </div>
 
-        {/* Filters */}
+        {/* Filter bar */}
         <div className="products-filters">
-          <div className="products-search-wrap">
-            <span className="products-search-icon">
-              <SearchIcon />
-            </span>
-            <input
-              type="text"
-              className="products-search"
-              placeholder="Search products..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+          {/* Row 1: search + selects + clear */}
+          <div className="products-filters-row">
+            <div className="products-search-wrap">
+              <span className="products-search-icon">
+                <SearchIcon />
+              </span>
+              <input
+                type="text"
+                className="products-search"
+                placeholder="Search products..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+
+            <CustomSelect
+              value={category}
+              onChange={setCategory}
+              options={CATEGORIES}
+              accentOnOpen
             />
+            <CustomSelect
+              value={sort}
+              onChange={setSort}
+              options={SORT_OPTIONS}
+              accentOnOpen
+            />
+
+            {hasAnyFilter && (
+              <button className="products-clear-btn" onClick={clearAll}>
+                <XIcon /> Clear
+              </button>
+            )}
           </div>
-          <CustomSelect
-            value={category}
-            onChange={setCategory}
-            options={CATEGORIES}
-            accentOnOpen
-          />
-          <CustomSelect
-            value={sort}
-            onChange={setSort}
-            options={SORT_OPTIONS}
-            accentOnOpen
-          />
+
+          {/* Row 2: active filter tags */}
+          {hasAnyFilter && (
+            <div className="products-tags-row">
+              {hasSearch && (
+                <span className="products-tag">
+                  "{search.trim()}"
+                  <button
+                    className="products-tag-x"
+                    onClick={() => setSearch("")}
+                    aria-label="Remove search filter"
+                  >
+                    <XIcon />
+                  </button>
+                </span>
+              )}
+              {hasCategory && (
+                <span className="products-tag">
+                  {category.toLowerCase()}
+                  <button
+                    className="products-tag-x"
+                    onClick={() => setCategory("All Categories")}
+                    aria-label="Remove category filter"
+                  >
+                    <XIcon />
+                  </button>
+                </span>
+              )}
+              {hasSort && (
+                <span className="products-tag">
+                  {sort}
+                  <button
+                    className="products-tag-x"
+                    onClick={() => setSort("Featured")}
+                    aria-label="Remove sort filter"
+                  >
+                    <XIcon />
+                  </button>
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Grid */}
@@ -665,11 +768,9 @@ export default function Products() {
         ) : (
           <div className="products-grid">
             {filtered.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onAdd={() => {}}
-              />
+              <Link to={`/home/productdetail/${product.id}`} key={product.id}>
+                <ProductCard product={product} onAdd={() => {}} />
+              </Link>
             ))}
           </div>
         )}

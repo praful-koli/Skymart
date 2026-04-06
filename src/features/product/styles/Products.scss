@@ -11,6 +11,7 @@ $text-muted:   #666666;
 $text-dim:     #999999;
 $border:       rgba(255, 255, 255, 0.09);
 $border-med:   rgba(255, 255, 255, 0.14);
+$red:          #e05555;
 $font:         'Syne', 'DM Sans', sans-serif;
 $ease:         0.18s ease;
 
@@ -33,7 +34,7 @@ $ease:         0.18s ease;
   gap: 28px;
 }
 
-// Header
+// ── Header ───────────────────────────────────────────────────
 .products-header {
   display: flex;
   flex-direction: column;
@@ -52,15 +53,27 @@ $ease:         0.18s ease;
   color: $text-muted;
 }
 
-// Filters bar
+.products-count-hl {
+  color: $accent;
+  font-weight: 700;
+}
+
+// ── Filter Bar ───────────────────────────────────────────────
 .products-filters {
-  display: flex;
-  gap: 12px;
-  align-items: center;
   background: $bg-filter;
   border: 1px solid $border-med;
   border-radius: 14px;
-  padding: 10px 14px;
+  padding: 10px 14px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+// Top row: search + selects + clear
+.products-filters-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
 }
 
 // Search
@@ -90,7 +103,70 @@ $ease:         0.18s ease;
   &::placeholder { color: $text-muted; }
 }
 
-// Custom Select
+// Clear all button
+.products-clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba($red, 0.12);
+  border: 1px solid rgba($red, 0.3);
+  border-radius: 8px;
+  color: $red;
+  font-family: $font;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background $ease, border-color $ease;
+
+  &:hover {
+    background: rgba($red, 0.2);
+    border-color: rgba($red, 0.5);
+  }
+}
+
+// ── Active Tags Row ───────────────────────────────────────────
+.products-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0 12px;
+  border-top: 1px solid $border;
+}
+
+.products-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba($accent, 0.1);
+  border: 1px solid rgba($accent, 0.25);
+  color: $accent;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 10px 4px 12px;
+  border-radius: 20px;
+  font-family: $font;
+}
+
+.products-tag-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: $accent;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.7;
+  transition: opacity $ease;
+
+  &:hover { opacity: 1; }
+}
+
+// ── Custom Select ─────────────────────────────────────────────
 .prod-select {
   position: relative;
   flex-shrink: 0;
@@ -168,14 +244,18 @@ $ease:         0.18s ease;
   }
 }
 
-// Grid
+// ── Product Grid ──────────────────────────────────────────────
 .products-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 16px;
+
+  a {
+    text-decoration: none;
+    display: block;
+  }
 }
 
-// Empty
 .products-empty {
   text-align: center;
   padding: 80px 20px;
@@ -183,21 +263,22 @@ $ease:         0.18s ease;
   color: $text-muted;
 }
 
-// ── Responsive ───────────────────────────────────────────────
+// ── Responsive ────────────────────────────────────────────────
 @media (max-width: 1100px) {
   .products-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 860px) {
-  .products-grid { grid-template-columns: repeat(3, 1fr); }
-  .products-filters { flex-wrap: wrap; }
+  .products-grid       { grid-template-columns: repeat(3, 1fr); }
+  .products-filters-row { flex-wrap: wrap; }
   .products-search-wrap { min-width: 100%; order: -1; }
 }
 
 @media (max-width: 600px) {
-  .products-grid { grid-template-columns: repeat(2, 1fr); }
-  .prod-select-trigger { min-width: unset; font-size: 0.8rem; padding: 7px 10px; }
-  .products-title { font-size: 1.8rem; }
+  .products-grid         { grid-template-columns: repeat(2, 1fr); }
+  .prod-select-trigger   { min-width: unset; font-size: 0.8rem; padding: 7px 10px; }
+  .products-title        { font-size: 1.8rem; }
+  .products-clear-btn    { font-size: 0.78rem; padding: 6px 10px; }
 }
 
 @media (max-width: 380px) {

@@ -1,4 +1,5 @@
 import "../styles/Home.scss";
+import { Link, useNavigate } from 'react-router';
 
 // ── Icons ────────────────────────────────────────────────────
 const BoxIcon = () => (
@@ -73,6 +74,13 @@ const newArrivals = [
 
 // ── Component ────────────────────────────────────────────────
 export default function Home() {
+  const navigate = useNavigate();
+
+  // Navigate to products page with category pre-selected as query param
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/home/products?category=${encodeURIComponent(categoryName)}`);
+  };
+
   return (
     <div className="home">
       <div className="home-container">
@@ -90,8 +98,8 @@ export default function Home() {
               electronics, fashion, and more.
             </p>
             <div className="hero-btns">
-              <button className="btn-primary">Shop Now <ArrowIcon /></button>
-              <button className="btn-outline">View All Products</button>
+              <button onClick={() => navigate('/home/products')} className="btn-primary">Shop Now <ArrowIcon /></button>
+              <button onClick={() => navigate('/home/products')} className="btn-outline">View All Products</button>
             </div>
           </div>
           <div className="hero-right">
@@ -146,11 +154,15 @@ export default function Home() {
         <section className="section">
           <div className="section-header">
             <h2 className="section-title">Shop by Category</h2>
-            <a href="#" className="section-link">View All <ArrowIcon /></a>
+            <Link to="/home/products" className="section-link">View All <ArrowIcon /></Link>
           </div>
           <div className="category-grid">
             {categories.map((cat) => (
-              <div className="category-card" key={cat.name}>
+              <div
+                className="category-card"
+                key={cat.name}
+                onClick={() => handleCategoryClick(cat.name)}
+              >
                 <span className="category-emoji">{cat.emoji}</span>
                 <span className="category-name">{cat.name}</span>
                 <span className="category-count">{cat.count} items</span>
@@ -168,7 +180,7 @@ export default function Home() {
                 <span className="panel-star"><StarIcon size={14} /></span>
                 Top Rated
               </span>
-              <a href="#" className="section-link">See all <ArrowIcon /></a>
+              <Link to="/home/products" className="section-link">See all <ArrowIcon /></Link>
             </div>
             <div className="product-list">
               {topRated.map((p) => (
@@ -188,7 +200,7 @@ export default function Home() {
                 <span className="panel-star"><BoltIcon /></span>
                 New Arrivals
               </span>
-              <a href="#" className="section-link">See all <ArrowIcon /></a>
+              <Link to="/home/products" className="section-link">See all <ArrowIcon /></Link>
             </div>
             <div className="product-list">
               {newArrivals.map((p) => (
