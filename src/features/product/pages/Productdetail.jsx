@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { useCart } from "../hook/useCart";
 import ProductCard from "../components/ProductCard";
 import "../styles/Productdetail.scss";
 import { Link, useNavigate, useParams } from "react-router";
+=======
+import { useState,useEffect } from "react";
+import { useCart } from "../hook/useCart";
+import ProductCard from "../components/ProductCard";
+import "../styles/Productdetail.scss";
+import { useNavigate, Link,useParams } from "react-router";
+>>>>>>> c149305db4d605e5b4e66dc007e3ec0f94e9c75c
 // ── Icons ──────────────────────────────────────────────────
 const StarIcon = ({ filled }) => (
   <svg
@@ -307,8 +315,13 @@ const ALL_PRODUCTS = [
   },
 ];
 
+<<<<<<< HEAD
 export default function ProductDetail({onBack, onNext }) {
  const { id } = useParams();
+=======
+export default function ProductDetail({ onBack, onNext }) {
+const { id } = useParams();
+>>>>>>> c149305db4d605e5b4e66dc007e3ec0f94e9c75c
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [wished, setWished] = useState(false);
@@ -320,6 +333,23 @@ export default function ProductDetail({onBack, onNext }) {
     const found =
       ALL_PRODUCTS.find((p) => String(p.id) === String(id)) || null;
     setProduct(found);
+<<<<<<< HEAD
+=======
+
+    if (found) {
+      const rel = ALL_PRODUCTS.filter(
+        (p) => p.category === found.category && String(p.id) !== String(found.id)
+      ).slice(0, 5);
+      setRelated(rel);
+    } else {
+      setRelated([]);
+    }
+  }, [id]);
+
+  if (!product) {
+    return <p>Product not found.</p>;
+  }
+>>>>>>> c149305db4d605e5b4e66dc007e3ec0f94e9c75c
 
     if (found) {
       const rel = ALL_PRODUCTS.filter(
@@ -450,12 +480,16 @@ export default function ProductDetail({onBack, onNext }) {
         {related.length > 0 && (
           <section className="pd-related">
             <h2 className="pd-related-title">Related Products</h2>
-            <div className="pd-related-grid">
+             <div className="pd-related-grid">
               {related.map((p) => (
                
                   <ProductCard key={p.id} product={p} />
+<<<<<<< HEAD
              
               
+=======
+            
+>>>>>>> c149305db4d605e5b4e66dc007e3ec0f94e9c75c
               ))}
             </div>
           </section>

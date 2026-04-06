@@ -42,7 +42,11 @@ export default function ProductCard({ product }) {
         count,} = useCart()
        
         // console.log('prduct ' , product)
+<<<<<<< HEAD
         const navigate  = useNavigate()
+=======
+      const navigate  = useNavigate()
+>>>>>>> c149305db4d605e5b4e66dc007e3ec0f94e9c75c
   return (
     <div className="pc-card">
       <div className="pc-image-wrap" onClick={()=> navigate(`/home/productdetail/${product.id}`)}>
