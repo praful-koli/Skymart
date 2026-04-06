@@ -149,10 +149,10 @@ $ease:        0.22s ease;
   cursor: pointer;
   transition: background 0.18s ease, transform 0.15s ease;
 
-  &:hover {
-    background: darken(#c8f135, 8%);
-    transform: translateY(-1px);
-  }
+  // &:hover {
+  //   background: darken(#c8f135, 8%);
+  //   transform: translateY(-1px);
+  // }
 
   &:active { transform: translateY(0); }
 }
