@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCart } from "../hook/useCart";
 import ProductCard from "../components/ProductCard";
 import "../styles/Productdetail.scss";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 // ── Icons ──────────────────────────────────────────────────
 const StarIcon = ({ filled }) => (
   <svg
@@ -433,7 +433,7 @@ export default function ProductDetail({ productId = 1, onBack, onNext }) {
             <h2 className="pd-related-title">Related Products</h2>
              <div className="pd-related-grid">
               {related.map((p) => (
-                <Link to={`/home/productdetails/${p.id}`}>
+               <Link to={`/home/productdetails/${p.id}`}>
                   <ProductCard key={p.id} product={p} />
                 </Link>
               ))}
