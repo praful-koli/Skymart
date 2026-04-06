@@ -104,7 +104,7 @@ export default function Register() {
   } = useForm({
     mode: "onChange",
   });
-  console.log("register page redender...");
+  
   const onSubmit = (data) => {
 
 
@@ -117,8 +117,9 @@ export default function Register() {
     setRegisters(newUsersReg);
     localStorage.setItem("reg users", JSON.stringify(newUsersReg));
     toast.success("Registered successfully");
-    reset();
     navigate("/home");
+    <Navigate to={'/home'}/>
+    reset();
   };
 
   const [showPass, setShowPass] = useState(false);
