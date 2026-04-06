@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../hook/useCart";
 import ProductCard from "../components/ProductCard";
 import "../styles/Productdetail.scss";
-import { useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 // ── Icons ──────────────────────────────────────────────────
 const StarIcon = ({ filled }) => (
   <svg
@@ -124,7 +124,7 @@ const NextArrow = () => (
   </svg>
 );
 
-// ── All Products (same as Products.jsx — in real app import from a shared file) ──
+
 const ALL_PRODUCTS = [
   {
     id: 1,
@@ -307,25 +307,44 @@ const ALL_PRODUCTS = [
   },
 ];
 
-export default function ProductDetail({ productId = 1, onBack, onNext }) {
+export default function ProductDetail({onBack, onNext }) {
+   const { id } = useParams();
+  const navigate = useNavigate();
   const { addToCart } = useCart();
   const [wished, setWished] = useState(false);
-  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+  const [related, setRelated] = useState([]);
 
-  const product =
-    ALL_PRODUCTS.find((p) => p.id === productId) || ALL_PRODUCTS[0];
-  const related = ALL_PRODUCTS.filter(
-    (p) => p.category === product.category && p.id !== product.id,
-  ).slice(0, 5);
+  // Update product whenever id changes
+  useEffect(() => {
+    const found =
+      ALL_PRODUCTS.find((p) => String(p.id) === String(id)) || null;
+    setProduct(found);
 
-//   const handleAdd = () => addToCart(product);
+    if (found) {
+      const rel = ALL_PRODUCTS.filter(
+        (p) => p.category === found.category && String(p.id) !== String(found.id)
+      ).slice(0, 5);
+      setRelated(rel);
+    } else {
+      setRelated([]);
+    }
+  }, [id]);
+
+  if (!product) {
+    return <p>Product not found.</p>;
+  }
+ 
 
   return (
     <div className="pd-page">
       <div className="pd-container">
         {/* Breadcrumb */}
         <nav className="pd-breadcrumb">
-          <button className="pd-back-btn" onClick={()=>navigate('/home/products')}>
+          <button
+            className="pd-back-btn"
+            onClick={() => navigate("/home/products")}
+          >
             <BackIcon /> Products
           </button>
           <span className="pd-bread-sep">/</span>
@@ -383,7 +402,7 @@ export default function ProductDetail({ productId = 1, onBack, onNext }) {
 
             {/* CTA */}
             <div className="pd-cta">
-              <button onClick={() => addToCart(product)} className="pd-add-btn" >
+              <button onClick={() => addToCart(product)} className="pd-add-btn">
                 <CartIcon /> Add to Cart
               </button>
               <button
@@ -433,11 +452,10 @@ export default function ProductDetail({ productId = 1, onBack, onNext }) {
             <h2 className="pd-related-title">Related Products</h2>
             <div className="pd-related-grid">
               {related.map((p) => (
-                <ProductCard
-                  key={p.id}
-                  product={p}
                
-                />
+                  <ProductCard key={p.id} product={p} />
+             
+              
               ))}
             </div>
           </section>

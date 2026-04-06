@@ -768,9 +768,9 @@ export default function Products() {
         ) : (
           <div className="products-grid">
             {filtered.map((product) => (
-              <Link to={`/home/productdetail/${product.id}`} key={product.id}>
+             
                 <ProductCard product={product} onAdd={() => {}} />
-              </Link>
+             
             ))}
           </div>
         )}
