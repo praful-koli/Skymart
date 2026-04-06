@@ -14,8 +14,8 @@ const ProtectedHome = () => {
 };
 
 const ProtectedAuth = () => {
-   const { loggedInUser ,registers } = useAuth();
-   if (loggedInUser || registers ) {
+   const { loggedInUser  } = useAuth();
+   if (loggedInUser ) {
    
     return  <Navigate to={'/home'}/>
   }
