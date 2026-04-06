@@ -433,7 +433,7 @@ export default function ProductDetail({ productId = 1, onBack, onNext }) {
             <h2 className="pd-related-title">Related Products</h2>
              <div className="pd-related-grid">
               {related.map((p) => (
-               <Link to={`/home/productdetails/${p.id}`}>
+               <Link to={`/home/productdetail/${p.id}`}>
                   <ProductCard key={p.id} product={p} />
                 </Link>
               ))}
