@@ -386,6 +386,7 @@ export default function Home() {
                       width: "40px",
                       height: "40px",
                     }}
+                    onClick={()=>navigate(`/home/productdetail/${p.id}`)}
                   />
 
                   <span className="product-price">{p.price}</span>
@@ -420,6 +421,7 @@ export default function Home() {
                       backgroundPosition: "center",
                       width: "40px",
                       height: "40px", }}
+                      onClick={()=>navigate(`/home/productdetail/${p.id}`)}
                   />
                   <span className="product-price">{p.price}</span>
                   <button className="product-cart-btn" onClick={()=> carthandlerButton(p)}>
