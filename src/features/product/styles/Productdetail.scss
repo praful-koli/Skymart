@@ -1,17 +1,21 @@
 // ============================================================
-//  ProductDetail.scss
+//  Productdetail.scss
 // ============================================================
 
 $bg:          #0d0d0d;
 $bg-image:    #ffffff;
-$bg-badge:    #1a1a1a;
 $bg-card:     #161616;
+$bg-qty:      #1e1e1e;
 $accent:      #c8f135;
+$accent-dark: #a8cc1a;
+$green:       #2a7a3b;
+$green-text:  #4ade80;
 $text:        #ffffff;
 $text-muted:  #777777;
 $text-dim:    #999999;
 $border:      rgba(255, 255, 255, 0.09);
 $border-med:  rgba(255, 255, 255, 0.13);
+$red:         #e05555;
 $font:        'Syne', 'DM Sans', sans-serif;
 $ease:        0.18s ease;
 
@@ -34,7 +38,7 @@ $ease:        0.18s ease;
   gap: 48px;
 }
 
-// Breadcrumb
+// ── Breadcrumb ────────────────────────────────────────────
 .pd-breadcrumb {
   display: flex;
   align-items: center;
@@ -55,17 +59,14 @@ $ease:        0.18s ease;
   cursor: pointer;
   padding: 0;
   transition: color $ease;
-
   &:hover { color: $text; }
 }
 
 .pd-bread-sep { color: rgba(255,255,255,0.2); }
-
 .pd-bread-item { color: $text-muted; }
-
 .pd-bread-current { color: $text-dim; }
 
-// Main layout
+// ── Main layout ───────────────────────────────────────────
 .pd-main {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -73,7 +74,7 @@ $ease:        0.18s ease;
   align-items: start;
 }
 
-// Image panel
+// ── Image ─────────────────────────────────────────────────
 .pd-image-wrap {
   background: $bg-image;
   border-radius: 18px;
@@ -91,7 +92,7 @@ $ease:        0.18s ease;
   display: block;
 }
 
-// Info panel
+// ── Info panel ────────────────────────────────────────────
 .pd-info {
   display: flex;
   flex-direction: column;
@@ -124,32 +125,17 @@ $ease:        0.18s ease;
   align-items: center;
   gap: 8px;
 }
-
-.pd-stars {
-  display: flex;
-  gap: 2px;
-}
-
-.pd-star-on  { color: #e5c44a; display: flex; }
-.pd-star-off { color: #333333; display: flex; }
-
-.pd-rating-num {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: $text;
-}
-
-.pd-rating-count {
-  font-size: 0.82rem;
-  color: $text-muted;
-}
+.pd-stars     { display: flex; gap: 2px; }
+.pd-star-on   { color: #e5c44a; display: flex; }
+.pd-star-off  { color: #333333; display: flex; }
+.pd-rating-num   { font-size: 0.9rem; font-weight: 700; color: $text; }
+.pd-rating-count { font-size: 0.82rem; color: $text-muted; }
 
 .pd-divider {
   height: 1px;
   background: $border;
 }
 
-// Price
 .pd-price {
   font-size: 2rem;
   font-weight: 900;
@@ -157,20 +143,78 @@ $ease:        0.18s ease;
   letter-spacing: -0.04em;
 }
 
-// Description
 .pd-desc {
   font-size: 0.88rem;
   line-height: 1.7;
   color: $text-muted;
 }
 
-// CTA row
+// ── In-cart qty row ───────────────────────────────────────
+.pd-qty-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $bg-qty;
+  border: 1px solid $border-med;
+  border-radius: 10px;
+  padding: 10px 18px;
+  animation: fade-slide-in 0.2s ease;
+}
+
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pd-qty-label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: $text-muted;
+}
+
+.pd-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pd-qty-btn {
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid $border-med;
+  border-radius: 6px;
+  color: $text;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background $ease, border-color $ease;
+
+  &:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.25);
+  }
+}
+
+.pd-qty-val {
+  font-size: 1rem;
+  font-weight: 800;
+  color: $text;
+  min-width: 20px;
+  text-align: center;
+}
+
+// ── CTA row ───────────────────────────────────────────────
 .pd-cta {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
+// Add to Cart button — default state
 .pd-add-btn {
   flex: 1;
   display: flex;
@@ -189,11 +233,25 @@ $ease:        0.18s ease;
   transition: background $ease, transform $ease;
 
   &:hover {
-    background: darken(#c8f135, 8%);
+    background: $accent-dark;
     transform: translateY(-1px);
+  }
+
+  // Added state — turns dark green
+  &.pd-add-btn-added {
+    background: $green;
+    color: $green-text;
+    cursor: default;
+    transform: none;
+
+    &:hover {
+      background: $green;
+      transform: none;
+    }
   }
 }
 
+// Wishlist button
 .pd-wish-btn {
   width: 48px;
   height: 48px;
@@ -209,21 +267,48 @@ $ease:        0.18s ease;
   transition: color $ease, border-color $ease, background $ease;
 
   &:hover {
-    color: #e05555;
-    border-color: rgba(224, 85, 85, 0.4);
-    background: rgba(224, 85, 85, 0.08);
+    color: $red;
+    border-color: rgba($red, 0.4);
+    background: rgba($red, 0.08);
   }
 
   &.pd-wish-btn-active {
-    color: #e05555;
-    background: rgba(224, 85, 85, 0.1);
-    border-color: rgba(224, 85, 85, 0.4);
-
-    svg { fill: #e05555; }
+    color: $red;
+    background: rgba($red, 0.1);
+    border-color: rgba($red, 0.4);
+    svg { fill: $red; }
   }
 }
 
-// Trust badges
+// ── View Cart button ──────────────────────────────────────
+.pd-view-cart-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid $border-med;
+  border-radius: 10px;
+  color: $text;
+  font-family: $font;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 13px 20px;
+  cursor: pointer;
+  transition: border-color $ease, background $ease;
+  animation: fade-slide-in 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.04);
+  }
+
+  svg { transition: transform $ease; }
+  &:hover svg { transform: translateX(3px); }
+}
+
+// ── Trust badges ──────────────────────────────────────────
 .pd-badges {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -238,7 +323,6 @@ $ease:        0.18s ease;
   align-items: center;
   gap: 10px;
   color: $text-muted;
-
   svg { flex-shrink: 0; color: $accent; }
 }
 
@@ -254,34 +338,56 @@ $ease:        0.18s ease;
   margin-top: 2px;
 }
 
-// Next button
-.pd-next-btn {
+// ── Previous / Next nav ───────────────────────────────────
+.pd-nav-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pd-nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  width: 100%;
-  background: $accent;
-  color: #0d0d0d;
-  border: none;
+  gap: 8px;
   border-radius: 10px;
-  padding: 14px 24px;
-  font-size: 0.92rem;
-  font-weight: 800;
+  padding: 13px 20px;
   font-family: $font;
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background $ease, transform $ease;
+  transition: background $ease, border-color $ease, transform $ease, opacity $ease;
 
-  &:hover {
-    background: darken(#c8f135, 8%);
-    transform: translateY(-1px);
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none !important;
   }
-
-  svg { transition: transform $ease; }
-  &:hover svg { transform: translateX(3px); }
 }
 
-// Related
+.pd-nav-prev {
+  background: $bg-qty;
+  border: 1px solid $border-med;
+  color: $text;
+
+  &:hover:not(:disabled) {
+    border-color: rgba(255,255,255,0.28);
+    background: rgba(255,255,255,0.06);
+  }
+}
+
+.pd-nav-next {
+  background: $accent;
+  border: none;
+  color: #0d0d0d;
+
+  &:hover:not(:disabled) {
+    background: $accent-dark;
+    transform: translateY(-1px);
+  }
+}
+
+// ── Related section ───────────────────────────────────────
 .pd-related {
   display: flex;
   flex-direction: column;
@@ -301,14 +407,15 @@ $ease:        0.18s ease;
   gap: 14px;
 }
 
-// Responsive
+// ── Responsive ────────────────────────────────────────────
 @media (max-width: 900px) {
-  .pd-main { grid-template-columns: 1fr; gap: 28px; }
-  .pd-related-grid { grid-template-columns: repeat(3, 1fr); }
+  .pd-main            { grid-template-columns: 1fr; gap: 28px; }
+  .pd-related-grid    { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 600px) {
-  .pd-name { font-size: 1.6rem; }
-  .pd-badges { grid-template-columns: 1fr; }
-  .pd-related-grid { grid-template-columns: repeat(2, 1fr); }
+  .pd-name            { font-size: 1.6rem; }
+  .pd-badges          { grid-template-columns: 1fr; }
+  .pd-related-grid    { grid-template-columns: repeat(2, 1fr); }
+  .pd-nav-btns        { grid-template-columns: 1fr; }
 }

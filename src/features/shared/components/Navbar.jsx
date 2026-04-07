@@ -49,7 +49,9 @@ export default function Navbar() {
   const {setIsOpen,items} = useCart()
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
- const {LogOut} = useAuth()
+ const {LogOut,loggedInUser ,registers} = useAuth()
+
+
   const LogOutHandler = () => {
     LogOut()
     navigate('/')
@@ -61,6 +63,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+ let currentUser  = registers.find((user)=> {
+     return user.email === loggedInUser.email && user.password === loggedInUser.password
+  })
   return (
     <nav className={`navbar${scrolled ? " navbar-scrolled" : ""}`}>
       <div className="navbar-inner">
@@ -116,8 +121,8 @@ export default function Navbar() {
         {/* Right Actions */}
         <div className="navbar-actions">
           <div className="navbar-user">
-            <div className="navbar-user-avatar">P</div>
-            <span className="navbar-user-name">Praful Koli</span>
+            <div className="navbar-user-avatar">{currentUser.name.slice(0,1)}</div>
+            <span className="navbar-user-name">{currentUser.name}</span>
           </div>
           <button onClick={() => setIsOpen(true)} className="navbar-btn-icon cart relative" aria-label="Cart">
             <CartIcon />

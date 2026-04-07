@@ -1,9 +1,19 @@
 import { useCart } from "../hook/useCart";
 import "../styles/ProductCard.scss";
-import {useNavigate} from 'react-router'
+import { useNavigate } from "react-router";
 const CartIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+  <svg
+    width="13"
+    height="13"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="9" cy="21" r="1" />
+    <circle cx="20" cy="21" r="1" />
     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
   </svg>
 );
@@ -19,7 +29,10 @@ function StarRating({ rating, count }) {
     <div className="pc-rating">
       <div className="pc-stars">
         {[1, 2, 3, 4, 5].map((i) => (
-          <span key={i} className={`pc-star ${i <= Math.round(rating) ? "pc-star-filled" : "pc-star-empty"}`}>
+          <span
+            key={i}
+            className={`pc-star ${i <= Math.round(rating) ? "pc-star-filled" : "pc-star-empty"}`}
+          >
             <StarIcon />
           </span>
         ))}
@@ -30,26 +43,16 @@ function StarRating({ rating, count }) {
 }
 
 export default function ProductCard({ product }) {
-  console.log(product)
-     const {addToCart, items,
-        isOpen,
-        openCart,
-        closeCart,
-        removeItem,
-        updateQty,
-        clearCart,
-        total,
-        count,} = useCart()
-       
-        // console.log('prduct ' , product)
-<<<<<<< HEAD
-        const navigate  = useNavigate()
-=======
-      const navigate  = useNavigate()
->>>>>>> c149305db4d605e5b4e66dc007e3ec0f94e9c75c
+  const { addToCart } = useCart();
+
+  const navigate = useNavigate();
+
   return (
     <div className="pc-card">
-      <div className="pc-image-wrap" onClick={()=> navigate(`/home/productdetail/${product.id}`)}>
+      <div
+        className="pc-image-wrap"
+        onClick={() => navigate(`/home/productdetail/${product.id}`)}
+      >
         <span className="pc-badge">{product.category}</span>
         <img src={product.image} alt={product.name} className="pc-image" />
       </div>
@@ -60,7 +63,7 @@ export default function ProductCard({ product }) {
         <div className="pc-divider" />
         <div className="pc-footer">
           <span className="pc-price">${product.price.toFixed(2)}</span>
-          <button className="pc-add-btn" onClick={() => addToCart(product) }>
+          <button className="pc-add-btn" onClick={() => addToCart(product)}>
             <CartIcon /> Add
           </button>
         </div>
