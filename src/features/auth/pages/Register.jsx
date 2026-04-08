@@ -95,7 +95,7 @@ const EyeOffIcon = () => (
 
 export default function Register() {
   const navigate = useNavigate();
-  const { registers, setRegisters } = useAuth();
+  const { registers, setRegisters,setLoggedInUser } = useAuth();
   const {
     register,
     reset,
@@ -117,6 +117,7 @@ export default function Register() {
     setRegisters(newUsersReg);
     localStorage.setItem("reg users", JSON.stringify(newUsersReg));
     toast.success("Registered successfully");
+    setLoggedInUser({...data})
     navigate("/home");
     <Navigate to={'/home'}/>
     reset();

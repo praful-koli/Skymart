@@ -1,9 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import "../styles/Products.scss";
-import { Link, useSearchParams } from "react-router";
-// import {useCart} from '../hook/useCart'
-// ── Icons ─────────────────────────────────────────────────────
+import { useSearchParams } from "react-router";
+
 const SearchIcon = () => (
   <svg
     width="16"
