@@ -66,6 +66,7 @@ export default function Navbar() {
  let currentUser  = registers.find((user)=> {
      return user.email === loggedInUser.email && user.password === loggedInUser.password
   })
+  console.log('relod')
   return (
     <nav className={`navbar${scrolled ? " navbar-scrolled" : ""}`}>
       <div className="navbar-inner">

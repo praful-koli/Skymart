@@ -610,7 +610,6 @@ function CustomSelect({ value, onChange, options, accentOnOpen = false }) {
 // ── Products Page ─────────────────────────────────────────────
 export default function Products() {
   const [searchParams] = useSearchParams();
-
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [sort, setSort] = useState("Featured");
@@ -618,6 +617,7 @@ export default function Products() {
   // ── Read ?category= from URL on first mount ────────────────
   useEffect(() => {
     const urlCategory = searchParams.get("category");
+    
     if (urlCategory && CATEGORIES.includes(urlCategory)) {
       setCategory(urlCategory);
     }

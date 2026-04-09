@@ -233,6 +233,11 @@ export default function Home() {
   const handleCategoryClick = (categoryName) => {
     navigate(`/home/products?category=${encodeURIComponent(categoryName)}`);
   };
+
+
+
+
+  
   let currentUser = registers.find((user) => {
     return (
       user.email === loggedInUser.email &&
@@ -244,6 +249,7 @@ export default function Home() {
   const carthandlerButton =(p)=> {
       addToCart(p)
   }
+
   return (
     <div className="home">
       <div className="home-container">
